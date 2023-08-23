@@ -1,7 +1,7 @@
 # This is a sample Python script.
 from utils.dy_utils import download_video
 
-dy_url = "8.43 CHv:/ 复制打开抖音，看看# 因为一个片段看了整部剧 # 热门短剧推荐 # ... https://v.douyin.com/iJG5kbJN/";
+dy_url = "4.84 jpD:/ 复制打开抖音，看看电信诈骗也太可怕了吧，特别是老年人。 # 低价电影... https://v.douyin.com/iJtc7LUd/"
 
 
 def dy_download(url):

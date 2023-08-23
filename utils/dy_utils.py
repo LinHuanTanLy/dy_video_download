@@ -31,7 +31,7 @@ def download_video(url):
 
     # 5 通过aweme_id获取信息
     aweme_info = get_aweme_info(aweme_id)
-    print("测试数据", aweme_info['video']['play_addr']['url_list'][0])
+    print("测试数据", aweme_info["video"]["play_addr"]["url_list"][0])
 
     return ""
 

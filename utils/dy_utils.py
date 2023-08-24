@@ -10,7 +10,7 @@ from utils.dy_encipher import getXbogus
 from utils.file_utils import download_file
 
 
-def download_video(url):
+def download_video(url: str, file_save_path: str):
     # 1 获取短链
     short_link = get_short_link(url)
     print("short link is " + short_link)
@@ -43,7 +43,7 @@ def download_video(url):
 
     if url_first is not None:
         # 7  下载视频
-        download_file(url_first, "test.mp4")
+        download_file(url_first, file_save_path)
 
 
 # 获取真正的短链

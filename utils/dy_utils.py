@@ -7,6 +7,7 @@ import requests
 from utils import dy_headers
 from urls.urls import Urls
 from utils.dy_encipher import getXbogus
+from utils.file_utils import download_file
 
 
 def download_video(url):
@@ -31,9 +32,18 @@ def download_video(url):
 
     # 5 通过aweme_id获取信息
     aweme_info = get_aweme_info(aweme_id)
-    print("测试数据", aweme_info["video"]["play_addr"]["url_list"][0])
 
-    return ""
+    # 6 获取url_list的第一个
+    if aweme_info is not None:
+        # 6.1 打印相关信息
+        print_video_info(aweme_info)
+        url_first = aweme_info["video"]["play_addr"]["url_list"][0]
+    else:
+        url_first = ""
+
+    if url_first is not None:
+        # 7  下载视频
+        download_file(url_first, "test.mp4")
 
 
 # 获取真正的短链
@@ -71,3 +81,18 @@ def get_aweme_info(aweme_id):
 
     print("获取成功，耗时", elapsed_time, 's')
     return datadict["aweme_detail"]
+
+
+# 打印信息
+def print_video_info(aweme_info):
+    if aweme_info is not None:
+        print("====================================")
+        print("小标题:", "\n", aweme_info["share_info"]["share_desc_info"].replace("#在抖音，记录美好生活#", ""))
+        print("下载url:", aweme_info["video"]["play_addr"]["url_list"][0])
+        if aweme_info["statistics"] is not None:
+            statistics = aweme_info["statistics"]
+            print("播放数:", statistics["play_count"])
+            print("点赞数:", statistics["digg_count"])
+            print("评论数:", statistics["comment_count"])
+            print("收藏数:", statistics["collect_count"])
+            print("分享数:", statistics["share_count"])

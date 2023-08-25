@@ -6,7 +6,7 @@ from utils.dy_utils import download_video
 from utils.ffmpeg_utils import video_do
 from pathlib import Path
 
-dy_url = "3.58 RKj:/ 复制打开抖音，看看单纯大学生误入黄泉黑店？ 感性中年人满身秘密？ 红... https://v.douyin.com/iJWJ8GfC/"
+dy_url = "4.61 oDH:/ 复制打开抖音，看看黄泉杂货铺 # 因为一个片段看了整部剧 # 抖音短... https://v.douyin.com/iJvfFUsA/"
 
 file_save_path = "save/save_dy_video.mp4"
 

@@ -68,6 +68,11 @@ def cut_frame_with_audio(input_video_path):
     output_video_path = "save/output.mp4"
     final_output_video_path = "save/final_output.mp4"
 
+    # 移除的帧数
+    cut_frame_count = 0
+    # 最大差别的帧差异
+    max_frame_diff = 0
+
     check_file(output_video_path)
     check_file(output_audio_path)
     check_file(final_output_video_path)
@@ -85,7 +90,7 @@ def cut_frame_with_audio(input_video_path):
     output_video = cv2.VideoWriter(output_video_path, fourcc, frame_rate, (frame_width, frame_height))
 
     unique_frames = []
-    similarity_threshold = 169  # 可根据需要调整
+    similarity_threshold = 55  # 可根据需要调整
     prev_frame = None
 
     while True:
@@ -99,14 +104,19 @@ def cut_frame_with_audio(input_video_path):
 
         diff = cv2.absdiff(prev_frame, frame)
         similarity = np.mean(diff)
+        if similarity > max_frame_diff:
+            max_frame_diff = similarity
         print("进行帧比较，当前帧差异为", str(similarity), "是否抛弃这一帧", str(similarity >= similarity_threshold))
         if similarity < similarity_threshold:
             unique_frames.append(frame)
+        else:
+            cut_frame_count += 1
         prev_frame = frame
 
     video_capture.release()
     cv2.destroyAllWindows()
-    print("进行帧比较完毕，目前帧数为", str(len(unique_frames)))
+    print("进行帧比较完毕，目前帧数为", str(len(unique_frames)), "一共移除了", cut_frame_count, "帧",
+          "其中最大的帧差异为", max_frame_diff)
 
     index = 0
     total = len(unique_frames)

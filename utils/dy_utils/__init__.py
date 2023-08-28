@@ -51,7 +51,7 @@ class DyUtils:
             return None
         while True:
             try:
-                payload = "aw_id=" + self.aw_id + "&device_platform=webapp&aid=6383"
+                payload = "aweme_id=" + self.aw_id + "&device_platform=webapp&aid=6383"
                 print("format_url " + payload)
                 single_video_url = Urls().POST_DETAIL + getXbogus(payload)
                 raw = requests.get(url=single_video_url, headers=dy_headers).text
@@ -63,4 +63,4 @@ class DyUtils:
                 print('[报错] ' + e)
                 return ""
 
-        return datadict["aw_detail"]
+        return datadict["aweme_detail"]

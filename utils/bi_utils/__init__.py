@@ -16,7 +16,7 @@ class BiUtils:
 
     # 获取视频的链接
     def __get_video_url(self, c_id: str):
-        url = f"https://api.bilibili.com/x/player/playurl?avid=&cid={c_id}&bvid={self.url}&qn=240&type=&otype=json"
+        url = f"https://api.bilibili.com/x/player/playurl?avid=&cid={c_id}&bvid={self.url}&qn=80&type=&otype=json"
         res = requests.get(url, headers=bi_headers)
         if res.status_code == 200 and res.text is not None:
             video_url = json.loads(res.text)["data"]["durl"][0]["url"]

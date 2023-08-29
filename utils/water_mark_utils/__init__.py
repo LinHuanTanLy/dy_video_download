@@ -1,4 +1,5 @@
 import os
+import subprocess
 import sys
 
 import cv2
@@ -38,8 +39,9 @@ class WaterMarkUtils:
         video_writer.release()
 
         (_, file_name) = os.path.split(self.file_path)
-        output_path = os.path.join(VIDEO_OUTPUT_PATH, file_name.split('.')[0] + "without_water_mark.mp4")
-        self.__merge_audio(output_path)
+        output_video_path = os.path.join(VIDEO_OUTPUT_PATH, file_name.split('.')[0] + "without_water_mark.mp4")
+        output_audio_path = os.path.join(VIDEO_OUTPUT_PATH, file_name.split('.')[0] + "without_water_mark.mp3")
+        self.__merge_audio(output_video_path, output_audio_path)
 
     # 截取视频多帧图像 生成多张水印，生成水印蒙版
     def __generate_watermark_mask(self) -> numpy.ndarray:
@@ -107,9 +109,10 @@ class WaterMarkUtils:
         telea = cv2.inpaint(img, mask, 1, cv2.INPAINT_TELEA)
         return telea
 
-    def __merge_audio(self, output_path):
+    def __merge_audio(self, output_video_path, output_audio_path):
         with editor.VideoFileClip(self.file_path) as video:
-            audio = video.audio
-            with editor.VideoFileClip(TEMP_VIDEO) as open_cv_video:
-                clip = open_cv_video.set_audio(audio)
-                clip.to_videofile(output_path)
+            clip = video.audio
+            clip.write_audiofile(output_audio_path)
+            subprocess.run(
+                ['ffmpeg', '-i', TEMP_VIDEO, '-i', output_audio_path, '-c:v', 'copy', '-c:a', 'aac', '-strict',
+                 'experimental', output_video_path])
